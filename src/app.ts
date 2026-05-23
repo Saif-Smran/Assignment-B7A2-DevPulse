@@ -5,6 +5,9 @@ import express,{
 }  from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import { sendResponce } from './utility/semdResponce'
+import { authRoute } from './modules/auth/auth.route'
+import globalErrorHandeling from './middleware/globalErrorHandeling'
 
 const app: Application = express()
 
@@ -14,18 +17,18 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-
+app.use(globalErrorHandeling)
 app.use(cookieParser())
 app.use(express.json())
 
 app.get('/', (req: Request, res: Response) => {
 
-    res.status(200).json({
-        message: 'Success',
-        author: 'Hosain'
-    })
+   sendResponce(res, 200, 'Welcome to the Issue Tracker API', null)
 
     // res.send('Hello World!')
 })
+
+app.use('/api/auth', authRoute)
+
 
 export default app
