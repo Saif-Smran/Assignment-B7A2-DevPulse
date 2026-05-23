@@ -5,6 +5,14 @@ interface IAuthSignup {
     role: string
 }
 
+interface JWTPayload {
+    id: number,
+    email: string,
+    name: string,
+    role: string
+}
+
 export type {
-    IAuthSignup
+    IAuthSignup,
+    JWTPayload
 }

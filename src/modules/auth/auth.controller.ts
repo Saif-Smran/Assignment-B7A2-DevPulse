@@ -14,6 +14,23 @@ const userSignup = async (req: Request, res: Response) =>{
     }
 }
 
+
+const loginUser = async (req: Request, res: Response) =>{
+    try {
+
+        const { email, password } = req.body
+
+        const result = await authService.loginUser({ email, password })
+
+        sendResponce(res, 200, 'Login successful', result)
+        
+    } catch (error : any) {
+        sendErrorResponce(res, 500, error.message || 'Something went wrong', error)
+    }
+
+}
+
 export const authController = {
-    userSignup
+    userSignup,
+    loginUser
 }
