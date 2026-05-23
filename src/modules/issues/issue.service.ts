@@ -148,8 +148,37 @@ const getIssueByIdFromDB = async (id: string) => {
     };
 };
 
+const updateIssueByIdInDB = async ( req: Request,id: string, payload: Partial<IIssue>) => {
+    const { title, description, type, status } = payload
+
+    const role = req.user?.role
+
+    if (role === 'contributor') {
+        const result = await pool.query(`SELECT status FROM issues WHERE id = $1`, [id]);
+        const issue = result.rows[0];
+
+        if (issue.status !== 'open') {
+            throw new Error(`Issue is already ${issue.status} and cannot be updated by a contributor.`);
+        }
+    }
+
+    const query = `UPDATE issues SET title = $1, description = $2, type = $3, status = COALESCE($4, status) WHERE id = $5 RETURNING *`
+    const result = await pool.query(query, [title, description, type, status, id])
+
+    return result.rows[0]
+}
+
+const DeleteIssueById = async (id: string) => {
+    const query = `DELETE FROM issues WHERE id = $1`
+    const result = await pool.query(query, [id])
+    return result.rows[0]
+}
+
 export const issueService = {
     addIssueIntoDB,
     getAllIssuesFromDB,
-    getIssueByIdFromDB
+    getIssueByIdFromDB,
+    updateIssueByIdInDB,
+    DeleteIssueById
 }
+

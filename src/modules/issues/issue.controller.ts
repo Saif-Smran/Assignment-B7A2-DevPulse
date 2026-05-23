@@ -39,8 +39,34 @@ const GetIssueById = async (req: Request, res: Response) => {
     }
 }
 
+const UpdateIssueById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params
+        const result = await issueService.updateIssueByIdInDB(req, id as string, req.body)
+        
+        sendResponce(res, 200, 'Issue updated successfully', result)
+    } catch (error : any) {
+            sendErrorResponce(res, 500,error.message || 'Failed to update issue', error)
+    }
+}
+
+const DeleteIssueById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params
+        const result = await issueService.DeleteIssueById(id as string)
+        
+        sendResponce(res, 200, 'Issue deleted successfully', result)
+        
+    } catch (error : any) {
+        sendErrorResponce(res, 500,error.message || 'Failed to delete issue', error)
+    }
+
+}
+
 export const issueController = {
     createIssue,
     getAllIssues,
-    GetIssueById
+    GetIssueById,
+    UpdateIssueById,
+    DeleteIssueById
 }
