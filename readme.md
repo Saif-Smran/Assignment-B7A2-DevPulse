@@ -4,7 +4,7 @@ DevPulse is a collaborative backend API for software teams to report bugs, reque
 
 ## Live URL
 
-Live URL: <add your deployed backend URL here>
+Live URL:  [https://assignment-b7a2-devpulse.vercel.app/](https://assignment-b7a2-devpulse.vercel.app/)
 
 ## Features
 

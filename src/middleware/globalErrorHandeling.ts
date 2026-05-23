@@ -1,13 +1,13 @@
 import type { NextFunction, Request, Response } from "express";
-import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+
 import { sendErrorResponce } from "../utility/semdResponce";
 
 const globalErrorHandeling = (err: unknown, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof TokenExpiredError) {
+    if (err instanceof Error && err.name === 'TokenExpiredError') {
         return sendErrorResponce(res, 401, 'Unauthorized', 'Token has expired')
     }
 
-    if (err instanceof JsonWebTokenError) {
+    if (err instanceof Error && err.name === 'JsonWebTokenError') {
         return sendErrorResponce(res, 401, 'Unauthorized', err.message)
     }
 
