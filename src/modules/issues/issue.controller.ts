@@ -10,10 +10,25 @@ const createIssue = async (req: Request, res: Response) => {
         sendResponce(res, 201, 'Issue created successfully', result)
         
     } catch (error : any) {
-        sendErrorResponce(res, 500, 'Failed to create issue', error.message)
+        sendErrorResponce(res, 500, error.message || 'Failed to create issue', error)
     }
 }
 
+const getAllIssues = async (req: Request, res: Response) => {
+    try {
+
+        const result = await issueService.getAllIssuesFromDB(req)
+        
+        sendResponce(res, 200, 'Issues fetched successfully', result)
+        
+    } catch (error :any) {
+        sendErrorResponce(res, 500,error.message || 'Failed to fetch issues', error)
+    }
+}
+
+
+
 export const issueController = {
-    createIssue
+    createIssue,
+    getAllIssues
 }

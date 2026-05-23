@@ -4,6 +4,15 @@ interface IIssue{
     type: string
 }
 
+interface IIssueFromDB extends IIssue{
+    id: number
+    reporter_id: number
+    status: string
+    created_at: Date
+    updated_at: Date
+}
+
 export type {
-    IIssue
+    IIssue,
+    IIssueFromDB
 }
