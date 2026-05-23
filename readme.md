@@ -210,4 +210,4 @@ Protected maintainer-only route for deleting an issue.
 - Passwords are hashed before storage.
 - Protected issue routes require a valid JWT token.
 - Reporter details are returned without SQL JOINs.
-- Interview video and deployment link should be added before submission.
+
