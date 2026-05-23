@@ -26,9 +26,21 @@ const getAllIssues = async (req: Request, res: Response) => {
     }
 }
 
+const GetIssueById = async (req: Request, res: Response) => {
+    try {
+        
+        const { id } = req.params
+        const result = await issueService.getIssueByIdFromDB(id as string)
+        
+        sendResponce(res, 200, 'Issue fetched successfully', result)
 
+    } catch (error : any) {
+        sendErrorResponce(res, 500,error.message || 'Failed to fetch issue', error)
+    }
+}
 
 export const issueController = {
     createIssue,
-    getAllIssues
+    getAllIssues,
+    GetIssueById
 }

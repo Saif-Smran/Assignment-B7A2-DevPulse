@@ -5,8 +5,8 @@ interface IIssue{
 }
 
 interface IIssueFromDB extends IIssue{
-    id: number
-    reporter_id: number
+    id: string
+    reporter_id: string
     status: string
     created_at: Date
     updated_at: Date

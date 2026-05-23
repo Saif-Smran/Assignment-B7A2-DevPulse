@@ -102,7 +102,54 @@ const getAllIssuesFromDB = async (req: Request) => {
     return formattedIssues;
 };
 
+const getIssueByIdFromDB = async (id: string) => {
+
+    // GET ISSUE
+    const issueQuery = `
+        SELECT * FROM issues
+        WHERE id = $1
+    `;
+
+    const issueResult = await pool.query(issueQuery, [id]);
+
+    const issue = issueResult.rows[0];
+
+    // ISSUE NOT FOUND
+    if (!issue) {
+        return null;
+    }
+
+    // GET REPORTER
+    const reporterQuery = `
+        SELECT id, name, role
+        FROM users
+        WHERE id = $1
+    `;
+
+    const reporterResult = await pool.query(
+        reporterQuery,
+        [issue.reporter_id]
+    );
+
+    const reporter = reporterResult.rows[0];
+
+    // FINAL RESPONSE
+    return {
+        id: issue.id,
+        title: issue.title,
+        description: issue.description,
+        type: issue.type,
+        status: issue.status,
+
+        reporter: reporter,
+
+        created_at: issue.created_at,
+        updated_at: issue.updated_at
+    };
+};
+
 export const issueService = {
     addIssueIntoDB,
-    getAllIssuesFromDB
+    getAllIssuesFromDB,
+    getIssueByIdFromDB
 }
