@@ -18,19 +18,18 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-app.use(globalErrorHandeling)
 app.use(cookieParser())
 app.use(express.json())
 
 app.get('/', (req: Request, res: Response) => {
-
-   sendResponce(res, 200, 'Welcome to the Issue Tracker API', null)
-
+    
+    sendResponce(res, 200, 'Welcome to the Issue Tracker API', null)
+    
     // res.send('Hello World!')
 })
 
 app.use('/api/auth', authRoute)
 app.use('/api/issues', issueRoute)
-
+app.use(globalErrorHandeling)
 
 export default app

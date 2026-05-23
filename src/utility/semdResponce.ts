@@ -9,12 +9,12 @@ const sendResponce = (res: Response, statusCode: number, message: string, data: 
     })
 }
 
-const sendErrorResponce = (res: Response, statusCode: number, message: string, error: any) => {
+const sendErrorResponce = (res: Response, statusCode: number, message: string, errors: any) => {
 
     res.status(statusCode).json({
         success: false,
         message: message,
-        error: error
+        errors: errors
     })
 }
 

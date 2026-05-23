@@ -152,13 +152,18 @@ const updateIssueByIdInDB = async ( req: Request,id: string, payload: Partial<II
     const { title, description, type, status } = payload
 
     const role = req.user?.role
+    const userId = req.user?.id
 
     if (role === 'contributor') {
-        const result = await pool.query(`SELECT status FROM issues WHERE id = $1`, [id]);
+        const result = await pool.query(`SELECT status, reporter_id FROM issues WHERE id = $1`, [id]);
         const issue = result.rows[0];
 
         if (issue.status !== 'open') {
             throw new Error(`Issue is already ${issue.status} and cannot be updated by a contributor.`);
+        }
+
+        if (issue.reporter_id !== userId) {
+            throw new Error(`You are not the owner of this issue and cannot update it.`);
         }
     }
 

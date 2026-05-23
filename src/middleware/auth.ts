@@ -22,7 +22,7 @@ const auth = (...roles: ROLES[]) => {
             const userData = await pool.query('SELECT * FROM users WHERE email = $1', [decode.email])
 
             if (userData.rows.length === 0) {
-                return sendErrorResponce(res, 404, 'User not found', null)
+                return sendErrorResponce(res, 401, 'Unauthorized', null)
             }
 
             if (roles.length && !roles.includes(userData.rows[0].role)) {
