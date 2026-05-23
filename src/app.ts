@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 import { sendResponce } from './utility/semdResponce'
 import { authRoute } from './modules/auth/auth.route'
 import globalErrorHandeling from './middleware/globalErrorHandeling'
+import { issueRoute } from './modules/issues/issues.route'
 
 const app: Application = express()
 
@@ -29,6 +30,7 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.use('/api/auth', authRoute)
+app.use('/api/issues', issueRoute)
 
 
 export default app
